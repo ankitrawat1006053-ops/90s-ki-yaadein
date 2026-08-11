@@ -2,73 +2,238 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>90s Ki Yaadein</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90s Ki Yaadein 🎵</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;color:#f8efd8;background:radial-gradient(circle at top,#55362b,#17100f 65%);min-height:100vh}
-.wrap{max-width:950px;margin:auto;padding:28px 18px 130px}.badge{display:inline-block;border:1px solid #d7b77a;padding:7px 13px;border-radius:20px;letter-spacing:2px;font-size:12px}
-h1{font-size:clamp(48px,12vw,105px);line-height:.85;margin:25px 0 12px;text-shadow:4px 4px #3a211c}.sub{font-size:18px;color:#d9c7a4}
-.hero{margin-top:30px;border:1px solid #9d7b4d;border-radius:25px;padding:25px;background:linear-gradient(145deg,#2b1a18aa,#100b0bcc);box-shadow:0 20px 60px #0008}
-.cassette{margin:auto;width:min(430px,90%);height:220px;border-radius:18px;background:linear-gradient(#292929,#111);border:7px solid #555;position:relative;padding:25px;text-align:center;box-shadow:0 15px 35px #000}
-.label{background:#d7b77a;color:#261714;height:100%;padding:22px;border-radius:8px}.reel{display:flex;justify-content:space-around;font-size:50px;margin:15px}
-.quote{margin:30px 0;text-align:center;font-size:24px;min-height:60px}
-h2{margin-top:45px}.songs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.song{padding:16px;border:1px solid #684d35;border-radius:14px;background:#211513;cursor:pointer}.song:hover{transform:translateY(-2px);background:#33201c}.year{font-size:12px;color:#c9aa73}
-.player{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:min(900px,94%);background:#17110feF;border:1px solid #9d7b4d;border-radius:20px;padding:14px 18px;backdrop-filter:blur(12px);display:flex;align-items:center;gap:14px;box-shadow:0 10px 40px #0009}.disc{font-size:28px}.now{flex:1;min-width:0}.now b,.now small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.controls button{border:0;border-radius:50%;width:42px;height:42px;background:#d7b77a;color:#241714;font-size:18px}.controls{display:flex;gap:7px}
-@media(max-width:600px){.player{gap:8px}.now{max-width:43%}.controls button{width:38px;height:38px}.quote{font-size:20px}}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#120b16,#241326,#0c1720);
+  color:white;
+}
+header{
+  text-align:center;
+  padding:30px 15px 20px;
+}
+h1{font-size:34px;margin:0 0 8px}
+.subtitle{color:#d8c8d8}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:15px;
+}
+
+.player{
+  background:#17131b;
+  border-radius:18px;
+  padding:15px;
+  box-shadow:0 8px 30px #0008;
+  margin-bottom:20px;
+}
+
+iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  border-radius:12px;
+}
+
+.now{
+  font-size:20px;
+  font-weight:bold;
+  margin:15px 0;
+}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-size:16px;
+  cursor:pointer;
+  background:#e8b86b;
+  color:#171017;
+  font-weight:bold;
+}
+
+button:active{transform:scale(.96)}
+
+.playlist{
+  display:grid;
+  gap:10px;
+}
+
+.song{
+  background:#1b1720;
+  border:1px solid #ffffff18;
+  border-radius:12px;
+  padding:15px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.song:hover{
+  background:#2b2230;
+  transform:translateY(-2px);
+}
+
+.song.active{
+  border-color:#e8b86b;
+  background:#302538;
+}
+
+.song-title{
+  font-weight:bold;
+}
+
+.song-number{
+  color:#e8b86b;
+  margin-right:8px;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#aaa;
+  font-size:14px;
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-<span class="badge">EST. 1990s • HINDI MEMORIES</span>
-<h1>90s Ki<br>Yaadein</h1>
-<div class="sub">Jab cassette, radio aur dil—teeno mein apni kahani hoti thi.</div>
 
-<section class="hero">
-<div class="cassette"><div class="label"><strong>90s MIX TAPE</strong><div class="reel">◉　◉</div><small>PLAY • REWIND • REMEMBER</small></div></div>
-<div class="quote" id="quote">“Kuch gaane waqt ko wapas le aate hain…”</div>
-</section>
+<header>
+  <h1>🎵 90s Ki Yaadein</h1>
+  <div class="subtitle">Purane gaanon ki khoobsurat yaadein ❤️</div>
+</header>
 
-<h2>🎵 Hamari Playlist</h2>
-<div class="songs" id="songs"></div>
+<div class="container">
+
+  <div class="player">
+    <iframe
+      id="youtubePlayer"
+      src="https://www.youtube.com/embed/i8kO5dAx5dE"
+      title="YouTube player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+
+    <div class="now" id="nowPlaying">Song 1</div>
+
+    <div class="controls">
+      <button onclick="previousSong()">⏮ Previous</button>
+      <button onclick="nextSong()">Next ⏭</button>
+    </div>
+  </div>
+
+  <div class="playlist" id="playlist"></div>
+
 </div>
 
-<div class="player">
-<div class="disc">💿</div><div class="now"><b id="title">Select a song</b><small>90s Ki Yaadein</small></div>
-<div class="controls"><button onclick="prev()">⏮</button><button onclick="play()" id="play">▶</button><button onclick="next()">⏭</button></div>
-</div>
+<footer>
+  © 2026 • 90s Ki Yaadein
+</footer>
 
 <script>
-const songs=[
-["Pehla Nasha","Jo Jeeta Wohi Sikandar"],
-["Ek Ladki Ko Dekha","1942: A Love Story"],
-["Tujhe Dekha To","Dilwale Dulhania Le Jayenge"],
-["Aankhon Se Tune Kya Keh Diya","Ghulam"],
-["Ae Kash Ke Hum","Kabhi Haan Kabhi Naa"],
-["Do Dil Mil Rahe Hain","Pardes"],
-["Tum Mile Dil Khile","Criminal"],
-["Mera Dil Bhi Kitna Pagal Hai","Saajan"],
-["Bahut Pyar Karte Hain","Saajan"],
-["Dheere Dheere Se Meri Zindagi Mein Aana","Aashiqui"],
-["Nazar Ke Samne","Aashiqui"],
-["Tu Meri Zindagi Hai","Aashiqui"],
-["Pardesi Pardesi","Raja Hindustani"],
-["Kuch Kuch Hota Hai","Kuch Kuch Hota Hai"],
-["Ladki Badi Anjani Hai","Kuch Kuch Hota Hai"],
-["Chura Ke Dil Mera","Main Khiladi Tu Anari"],
-["Ole Ole","Yeh Dillagi"],
-["Chand Chhupa Badal Mein","Hum Dil De Chuke Sanam"],
-["Kaun Disha Mein Leke Chala Re","Nadiya Ke Paar"]
+
+const songs = [
+  "i8kO5dAx5dE",
+  "D61BvxAOxm0",
+  "O6JTWVkJYtM",
+  "6qBdQzPnw4E",
+  "BukHiHrbFpA",
+  "clp9VpVA8Tg",
+  "JOt45suga2s",
+  "U2ETIaxA3eI",
+  "Z9VpwQD27jI",
+  "swC9xzv1kXE",
+  "8sH7rSHpjB4",
+  "cBw4H6Dx4vc",
+  "asVkFSVdJPo",
+  "XQMaYG4A0_Y",
+  "TJfTuTQMoDM"
 ];
-let i=0,playing=false;
-const box=document.getElementById("songs"), title=document.getElementById("title"), btn=document.getElementById("play");
-songs.forEach((s,n)=>{let d=document.createElement("div");d.className="song";d.innerHTML=`<b>${s[0]}</b><br><span class="year">${s[1]}</span>`;d.onclick=()=>select(n);box.appendChild(d)});
-function select(n){i=n;title.textContent=songs[i][0];playing=true;btn.textContent="⏸"}
-function play(){playing=!playing;btn.textContent=playing?"⏸":"▶";if(playing)title.textContent=songs[i][0]}
-function next(){select((i+1)%songs.length)}
-function prev(){select((i-1+songs.length)%songs.length)}
-const quotes=["“Kuch gaane waqt ko wapas le aate hain…”","“Cassette palti nahi thi, yaadein palat jaati thi.”","“90s ka music, dil ka permanent favourite.”","“Radio ki awaaz aur shaam ki chai.”"];
-let q=0;setInterval(()=>{q=(q+1)%quotes.length;document.getElementById("quote").textContent=quotes[q]},3500);
+
+let currentSong = 0;
+
+const playlist = document.getElementById("playlist");
+const player = document.getElementById("youtubePlayer");
+const nowPlaying = document.getElementById("nowPlaying");
+
+function loadPlaylist(){
+
+  playlist.innerHTML = "";
+
+  songs.forEach((id,index)=>{
+
+    const div = document.createElement("div");
+
+    div.className = "song" + (index === currentSong ? " active" : "");
+
+    div.innerHTML = `
+      <span class="song-number">${index + 1}.</span>
+      <span class="song-title">Song ${index + 1}</span>
+    `;
+
+    div.onclick = () => playSong(index);
+
+    playlist.appendChild(div);
+
+  });
+
+}
+
+function playSong(index){
+
+  currentSong = index;
+
+  player.src =
+    "https://www.youtube.com/embed/" +
+    songs[index] +
+    "?autoplay=1";
+
+  nowPlaying.textContent =
+    "Song " + (index + 1);
+
+  loadPlaylist();
+
+}
+
+function nextSong(){
+
+  currentSong++;
+
+  if(currentSong >= songs.length){
+    currentSong = 0;
+  }
+
+  playSong(currentSong);
+
+}
+
+function previousSong(){
+
+  currentSong--;
+
+  if(currentSong < 0){
+    currentSong = songs.length - 1;
+  }
+
+  playSong(currentSong);
+
+}
+
+loadPlaylist();
+
 </script>
+
 </body>
 </html>
