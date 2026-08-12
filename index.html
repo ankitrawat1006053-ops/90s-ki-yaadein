@@ -33,13 +33,35 @@ h1{
   margin-top:10px;
   font-size:16px;
   font-weight:bold;
-  letter-spacing:1px;
 }
 
 .container{
   max-width:900px;
   margin:auto;
   padding:15px;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.tab{
+  flex:1;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#2a2230;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:#e8b86b;
+  color:#171017;
 }
 
 .search-box{
@@ -68,7 +90,7 @@ iframe{
 }
 
 .now{
-  font-size:20px;
+  font-size:19px;
   font-weight:bold;
   margin:15px 0;
 }
@@ -79,11 +101,11 @@ iframe{
   gap:10px;
 }
 
-button{
+.controls button{
   border:0;
   border-radius:10px;
   padding:12px 18px;
-  font-size:16px;
+  font-size:15px;
   cursor:pointer;
   background:#e8b86b;
   color:#171017;
@@ -112,13 +134,13 @@ button{
   background:#302538;
 }
 
-.song-title{
-  font-weight:bold;
-}
-
 .song-number{
   color:#e8b86b;
   margin-right:8px;
+}
+
+.song-title{
+  font-weight:bold;
 }
 
 .no-result{
@@ -138,29 +160,39 @@ footer{
 <body>
 
 <header>
-  <h1>🎵 90s Ki Yaadein</h1>
-  <div class="subtitle">Purane gaanon ki khoobsurat yaadein ❤️</div>
-  <div class="by-ankit">By Ankit ❤️</div>
+<h1>🎵 90s Ki Yaadein</h1>
+<div class="subtitle">Purane aur naye gaanon ki yaadein ❤️</div>
+<div class="by-ankit">By Ankit ❤️</div>
 </header>
 
 <div class="container">
 
+<div class="tabs">
+<button id="tab90s" class="tab active" onclick="changeCategory('90s')">
+🎵 90s
+</button>
+
+<button id="tabNew" class="tab" onclick="changeCategory('new')">
+🆕 New
+</button>
+</div>
+
 <input
-  type="text"
-  id="searchBox"
-  class="search-box"
-  placeholder="🔍 Search Song..."
-  oninput="searchSongs()"
+type="text"
+id="searchBox"
+class="search-box"
+placeholder="🔍 Search Song..."
+oninput="searchSongs()"
 >
 
 <div class="player">
 
 <iframe
-  id="youtubePlayer"
-  src="https://www.youtube.com/embed/i8kO5dAx5dE"
-  title="YouTube player"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  allowfullscreen>
+id="youtubePlayer"
+src="https://www.youtube.com/embed/i8kO5dAx5dE"
+title="YouTube player"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen>
 </iframe>
 
 <div class="now" id="nowPlaying">
@@ -184,130 +216,263 @@ Bahut Jatate Ho Chah Humse
 
 <script>
 
-const songs = [
-"i8kO5dAx5dE",
-"D61BvxAOxm0",
-"O6JTWVkJYtM",
-"6qBdQzPnw4E",
-"BukHiHrbFpA",
-"clp9VpVA8Tg",
-"JOt45suga2s",
-"U2ETIaxA3eI",
-"Z9VpwQD27jI",
-"swC9xzv1kXE",
-"8sH7rSHpjB4",
-"cBw4H6Dx4vc",
-"asVkFSVdJPo",
-"XQMaYG4A0_Y",
-"TJfTuTQMoDM"
+const songs90s = [
+{
+id:"i8kO5dAx5dE",
+name:"Bahut Jatate Ho Chah Humse"
+},
+{
+id:"D61BvxAOxm0",
+name:"Kaun Disha Mein Leke Chala Re"
+},
+{
+id:"O6JTWVkJYtM",
+name:"Chand Ke Paar Chalo"
+},
+{
+id:"6qBdQzPnw4E",
+name:"Dil Laga Liya Maine Tumse Pyaar Karke"
+},
+{
+id:"BukHiHrbFpA",
+name:"Rab Kare Tujhko Bhi"
+},
+{
+id:"clp9VpVA8Tg",
+name:"Kitna Pyaara Hai Yeh Chehra"
+},
+{
+id:"JOt45suga2s",
+name:"Kisi Se Tum Pyaar Karo"
+},
+{
+id:"U2ETIaxA3eI",
+name:"Yeh Dua Hai Meri Rab Se"
+},
+{
+id:"Z9VpwQD27jI",
+name:"Tujhe Na Dekhun Toh Chain"
+},
+{
+id:"swC9xzv1kXE",
+name:"Main Agar Saamne Aa Bhi Jaya Karun"
+},
+{
+id:"8sH7rSHpjB4",
+name:"Choodi Maza Na Degi"
+},
+{
+id:"cBw4H6Dx4vc",
+name:"Ghoonghat Ki Aad Se"
+},
+{
+id:"asVkFSVdJPo",
+name:"Mujhse Mohabbat Ka Izhaar"
+},
+{
+id:"XQMaYG4A0_Y",
+name:"Song 14"
+},
+{
+id:"TJfTuTQMoDM",
+name:"Aap Ke Aa Jaane Se"
+}
 ];
 
-const songNames = [
-"Bahut Jatate Ho Chah Humse",
-"Kaun Disha Mein Leke Chala Re",
-"Chand Ke Paar Chalo",
-"Dil Laga Liya Maine Tumse Pyaar Karke",
-"Rab Kare Tujhko Bhi",
-"Kitna Pyaara Hai Yeh Chehra",
-"Kisi Se Tum Pyaar Karo",
-"Yeh Dua Hai Meri Rab Se",
-"Tujhe Na Dekhun Toh Chain",
-"Main Agar Saamne Aa Bhi Jaya Karun",
-"Choodi Maza Na Degi",
-"Ghoonghat Ki Aad Se",
-"Mujhse Mohabbat Ka Izhaar",
-"Song 14",
-"Aap Ke Aa Jaane Se"
+const newSongs = [
+{
+id:"6dP-DpF65Rs",
+name:"Tough"
+},
+{
+id:"nMozMETeCyw",
+name:"Katha Lagta"
+},
+{
+id:"3j7bhOvW6jw",
+name:"Low Fade"
+},
+{
+id:"_cyQq-utMns",
+name:"Wavy"
+},
+{
+id:"GE6w7DRyqcM",
+name:"Headliner"
+},
+{
+id:"cL0KKSPjZf8",
+name:"Bhoom Shaka"
+},
+{
+id:"eHyl9KG9RWA",
+name:"3.59"
+},
+{
+id:"5GCfYLguTIs",
+name:"Boyfriend"
+},
+{
+id:"YY583HmKBzA",
+name:"Soniye"
+},
+{
+id:"LbbSoslqO6s",
+name:"Talwar Pasiyon Ki"
+},
+{
+id:"vbDs7sm9xM8",
+name:"Jangal Ke Shikari"
+},
+{
+id:"XcJVcyZ2vwE",
+name:"Hopeless"
+},
+{
+id:"FWuEGWeTRu8",
+name:"Superstar"
+},
+{
+id:"pSLZ4_2lcJo",
+name:"Cash Cash"
+},
+{
+id:"SS0AHAHFhQ0",
+name:"Satranj Ka Khiladi"
+}
 ];
 
-let currentSong = 0;
+let category="90s";
+let currentSong=0;
 
-const playlist = document.getElementById("playlist");
-const player = document.getElementById("youtubePlayer");
-const nowPlaying = document.getElementById("nowPlaying");
+const playlist=document.getElementById("playlist");
+const player=document.getElementById("youtubePlayer");
+const nowPlaying=document.getElementById("nowPlaying");
 
-function loadPlaylist(list = songs){
+function getSongs(){
+return category==="90s" ? songs90s : newSongs;
+}
 
-  playlist.innerHTML = "";
+function loadPlaylist(list=getSongs()){
 
-  if(list.length === 0){
-    playlist.innerHTML =
-      '<div class="no-result">Song nahi mila 😔</div>';
-    return;
-  }
+playlist.innerHTML="";
 
-  list.forEach((id)=>{
+if(list.length===0){
+playlist.innerHTML='<div class="no-result">Song nahi mila 😔</div>';
+return;
+}
 
-    const index = songs.indexOf(id);
+list.forEach((song)=>{
 
-    const div = document.createElement("div");
+const index=getSongs().indexOf(song);
 
-    div.className =
-      "song" + (index === currentSong ? " active" : "");
+const div=document.createElement("div");
 
-    div.innerHTML = `
-      <span class="song-number">${index + 1}.</span>
-      <span class="song-title">${songNames[index]}</span>
-    `;
+div.className="song"+(index===currentSong ? " active":"");
 
-    div.onclick = () => playSong(index);
+div.innerHTML=`
+<span class="song-number">${index+1}.</span>
+<span class="song-title">${song.name}</span>
+`;
 
-    playlist.appendChild(div);
+div.onclick=()=>playSong(index);
 
-  });
+playlist.appendChild(div);
+
+});
 }
 
 function playSong(index){
 
-  currentSong = index;
+const songs=getSongs();
 
-  player.src =
-    "https://www.youtube.com/embed/" +
-    songs[index] +
-    "?autoplay=1";
+currentSong=index;
 
-  nowPlaying.textContent = songNames[index];
+player.src=
+"https://www.youtube.com/embed/"+
+songs[index].id+
+"?autoplay=1";
 
-  loadPlaylist();
+nowPlaying.textContent=songs[index].name;
+
+loadPlaylist();
+
 }
 
 function nextSong(){
 
-  currentSong++;
+const songs=getSongs();
 
-  if(currentSong >= songs.length){
-    currentSong = 0;
-  }
+currentSong++;
 
-  playSong(currentSong);
+if(currentSong>=songs.length){
+currentSong=0;
+}
+
+playSong(currentSong);
+
 }
 
 function previousSong(){
 
-  currentSong--;
+const songs=getSongs();
 
-  if(currentSong < 0){
-    currentSong = songs.length - 1;
-  }
+currentSong--;
 
-  playSong(currentSong);
+if(currentSong<0){
+currentSong=songs.length-1;
+}
+
+playSong(currentSong);
+
+}
+
+function changeCategory(newCategory){
+
+category=newCategory;
+currentSong=0;
+
+document.getElementById("searchBox").value="";
+
+document.getElementById("tab90s")
+.classList.toggle("active",category==="90s");
+
+document.getElementById("tabNew")
+.classList.toggle("active",category==="new");
+
+const songs=getSongs();
+
+player.src=
+"https://www.youtube.com/embed/"+
+songs[0].id;
+
+nowPlaying.textContent=songs[0].name;
+
+loadPlaylist();
+
 }
 
 function searchSongs(){
 
-  const search =
-    document.getElementById("searchBox").value.toLowerCase().trim();
+const search=document
+.getElementById("searchBox")
+.value
+.toLowerCase()
+.trim();
 
-  if(search === ""){
-    loadPlaylist();
-    return;
-  }
+const songs=getSongs();
 
-  const filtered = songs.filter((id,index) =>
-    songNames[index].toLowerCase().includes(search)
-  );
+if(search===""){
+loadPlaylist();
+return;
+}
 
-  loadPlaylist(filtered);
+const filtered=songs.filter(song =>
+song.name.toLowerCase().includes(search)
+);
+
+loadPlaylist(filtered);
+
 }
 
 loadPlaylist();
