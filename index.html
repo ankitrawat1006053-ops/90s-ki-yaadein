@@ -4,8 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>90s Ki Yaadein 🎵</title>
-<div class="by-ankit">By Ankit ❤️</div>
+
 <style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#120b16,#241326,#0c1720);
+  color:white;
+}
+
+header{
+  text-align:center;
+  padding:30px 15px 20px;
+}
+
+h1{
+  font-size:34px;
+  margin:0 0 8px;
+}
+
+.subtitle{
+  color:#d8c8d8;
+}
+
 .by-ankit{
   margin-top:10px;
   font-size:16px;
@@ -13,17 +38,23 @@
   letter-spacing:1px;
   opacity:.9;
 }
-header{
-  text-align:center;
-  padding:30px 15px 20px;
-}
-h1{font-size:34px;margin:0 0 8px}
-.subtitle{color:#d8c8d8}
 
 .container{
   max-width:900px;
   margin:auto;
   padding:15px;
+}
+
+.search-box{
+  width:100%;
+  padding:14px 16px;
+  margin-bottom:20px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  outline:none;
+  background:#fff;
+  color:#222;
 }
 
 .player{
@@ -64,7 +95,9 @@ button{
   font-weight:bold;
 }
 
-button:active{transform:scale(.96)}
+button:active{
+  transform:scale(.96);
+}
 
 .playlist{
   display:grid;
@@ -99,6 +132,12 @@ button:active{transform:scale(.96)}
   margin-right:8px;
 }
 
+.no-result{
+  text-align:center;
+  color:#aaa;
+  padding:20px;
+}
+
 footer{
   text-align:center;
   padding:30px;
@@ -113,11 +152,21 @@ footer{
 <header>
   <h1>🎵 90s Ki Yaadein</h1>
   <div class="subtitle">Purane gaanon ki khoobsurat yaadein ❤️</div>
+  <div class="by-ankit">By Ankit ❤️</div>
 </header>
 
 <div class="container">
 
+  <input
+    type="text"
+    id="searchBox"
+    class="search-box"
+    placeholder="🔍 Search Song..."
+    oninput="searchSongs()"
+  >
+
   <div class="player">
+
     <iframe
       id="youtubePlayer"
       src="https://www.youtube.com/embed/i8kO5dAx5dE"
@@ -132,6 +181,7 @@ footer{
       <button onclick="previousSong()">⏮ Previous</button>
       <button onclick="nextSong()">Next ⏭</button>
     </div>
+
   </div>
 
   <div class="playlist" id="playlist"></div>
@@ -139,7 +189,7 @@ footer{
 </div>
 
 <footer>
-  © 2026 • 90s Ki Yaadein
+  © 2026 • 90s Ki Yaadein • By Ankit ❤️
 </footer>
 
 <script>
@@ -168,15 +218,24 @@ const playlist = document.getElementById("playlist");
 const player = document.getElementById("youtubePlayer");
 const nowPlaying = document.getElementById("nowPlaying");
 
-function loadPlaylist(){
+function loadPlaylist(list = songs){
 
   playlist.innerHTML = "";
 
-  songs.forEach((id,index)=>{
+  if(list.length === 0){
+    playlist.innerHTML =
+      '<div class="no-result">Song nahi mila 😔</div>';
+    return;
+  }
+
+  list.forEach((id)=>{
+
+    const index = songs.indexOf(id);
 
     const div = document.createElement("div");
 
-    div.className = "song" + (index === currentSong ? " active" : "");
+    div.className =
+      "song" + (index === currentSong ? " active" : "");
 
     div.innerHTML = `
       <span class="song-number">${index + 1}.</span>
@@ -229,6 +288,26 @@ function previousSong(){
 
   playSong(currentSong);
 
+}
+
+function searchSongs(){
+
+  const search =
+    document.getElementById("searchBox")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if(search === ""){
+    loadPlaylist();
+    return;
+  }
+
+  const filtered = songs.filter((id,index) =>
+    ("song " + (index + 1)).includes(search)
+  );
+
+  loadPlaylist(filtered);
 }
 
 loadPlaylist();
